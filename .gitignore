@@ -1,0 +1,21 @@
+# Ant
+bin
+test-report
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Eclipse
+bin
+.classpath
+.settings
+.project
+
+# IntelliJ
+.idea
+*.iml
+*.ipr
+*.iws
+
+# Misc
+*.log
