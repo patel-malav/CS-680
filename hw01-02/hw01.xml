@@ -1,47 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="junit5-jupiter-starter-ant" default="build" basedir=".">
+<project name="junit5-jupiter-starter-ant" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <fail message="Ant 1.10.4+ is required!">
         <condition>
             <not>
-                <antversion atleast="1.10.4"/>
+                <antversion atleast="1.10.4" />
             </not>
         </condition>
     </fail>
 
     <path id="test.classpath">
-        <pathelement path="bin/test"/>
-        <pathelement path="bin/main"/>
-        <fileset dir="lib" includes="*.jar"/>
+        <pathelement path="test/bin" />
+        <pathelement path="bin" />
+        <fileset dir="lib" includes="*.jar" />
     </path>
 
     <target name="build" description="clean build" depends="clean, test, run" />
 
     <target name="clean">
-        <delete dir="bin"/>
+        <delete dir="bin" />
+        <delete dir="test/bin" />
         <delete dir="test-report" />
     </target>
 
     <target name="init">
-        <mkdir dir="bin/main"/>
-        <mkdir dir="bin/test"/>
-        <mkdir dir="test-report"/>
+        <mkdir dir="lib" />
+        <mkdir dir="bin" />
+        <mkdir dir="test/bin" />
+        <mkdir dir="test-report" />
     </target>
 
-    <target name="compile" depends="init">
-        <javac destdir="bin/main" srcdir="src/main" includeantruntime="false"/>
-        <javac destdir="bin/test" classpathref="test.classpath" srcdir="src/test" includeantruntime="false"/>
+    <target name="resolve" depends="init" description="Download Jar files">
+        <ivy:retrieve />
+    </target>
+
+    <target name="compile" depends="resolve">
+        <javac destdir="bin" srcdir="src" includeantruntime="false" />
+        <javac destdir="test/bin" classpathref="test.classpath" srcdir="test" includeantruntime="false" />
     </target>
 
     <!-- https://junit.org/junit5/docs/snapshot/user-guide/#running-tests-build-ant -->
     <target name="test.junit.launcher" depends="compile">
         <junitlauncher haltOnFailure="true" printSummary="true">
-            <classpath refid="test.classpath"/>
+            <classpath refid="test.classpath" />
             <testclasses outputdir="test-report">
-                <fileset dir="bin/test">
-                    <include name="**/*Test.class"/>
+                <fileset dir="test/bin">
+                    <include name="**/*Test.class" />
                 </fileset>
-                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true" />
                 <listener type="legacy-plain" sendSysOut="true" />
             </testclasses>
         </junitlauncher>
@@ -50,24 +56,23 @@
     <!-- https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher -->
     <target name="test.console.launcher" depends="compile">
         <java classpathref="test.classpath" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
-            <arg value="--scan-classpath"/>
-            <arg line="--reports-dir test-report"/>
+            <arg value="--scan-classpath" />
+            <arg line="--reports-dir test-report" />
         </java>
         <junitreport todir="test-report">
             <fileset dir="test-report">
-                <include name="TEST-*.xml"/>
+                <include name="TEST-*.xml" />
             </fileset>
-            <report format="frames" todir="test-report/html"/>
+            <report format="frames" todir="test-report/html" />
         </junitreport>
     </target>
 
     <target name="test" depends="test.junit.launcher, test.console.launcher" />
-    <!-- <target name="test" depends="test.junit.launcher" /> -->
 
     <target name="run" depends="compile">
         <java classname="edu.umb.cs680.hw00.Calculator"
-            classpathref="test.classpath"  
-            fork="true"/>
+            classpathref="test.classpath"
+            fork="true" />
         <java classname="edu.umb.cs680.hw01.PrimeGenerator"
             classpathref="test.classpath"
             fork="true" />
