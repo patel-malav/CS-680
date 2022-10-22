@@ -53,21 +53,7 @@
         </junitlauncher>
     </target>
 
-    <!-- https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher -->
-    <target name="test.console.launcher" depends="compile">
-        <java classpathref="test.classpath" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
-            <arg value="--scan-classpath" />
-            <arg line="--reports-dir test-report" />
-        </java>
-        <junitreport todir="test-report">
-            <fileset dir="test-report">
-                <include name="TEST-*.xml" />
-            </fileset>
-            <report format="frames" todir="test-report/html" />
-        </junitreport>
-    </target>
-
-    <target name="test" depends="test.junit.launcher, test.console.launcher" />
+    <target name="test" depends="test.junit.launcher" />
 
     <target name="run" depends="compile">
         <java classname="edu.umb.cs680.hw00.Calculator"
