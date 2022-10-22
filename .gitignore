@@ -1,6 +1,7 @@
 # Ant
 bin
 test-report
+lib
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -19,3 +20,9 @@ bin
 
 # Misc
 *.log
+
+# Vscode
+.vscode
+
+# notes
+notes
