@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="junit5-jupiter-starter-ant" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="hw03" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <property name="package" value="hw03" />
 
     <fail message="Ant 1.10.4+ is required!">
         <condition>
@@ -15,7 +17,7 @@
         <fileset dir="lib" includes="*.jar" />
     </path>
 
-    <target name="build" description="clean build" depends="clean, test, run" />
+    <target name="build" description="clean build" depends="clean, test" />
 
     <target name="clean">
         <delete dir="bin" />
@@ -35,8 +37,12 @@
     </target>
 
     <target name="compile" depends="resolve">
-        <javac destdir="bin" srcdir="src" includeantruntime="false" />
-        <javac destdir="test/bin" classpathref="test.classpath" srcdir="test" includeantruntime="false" />
+        <javac destdir="bin" srcdir="src" includeantruntime="false">
+            <include name="edu/umb/cs680/${package}/**/*.java" />
+        </javac>
+        <javac destdir="test/bin" classpathref="test.classpath" srcdir="test" includeantruntime="false">
+            <include name="edu/umb/cs680/${package}/**/*Test.java" />
+        </javac>
     </target>
 
     <!-- https://junit.org/junit5/docs/snapshot/user-guide/#running-tests-build-ant -->
@@ -54,13 +60,4 @@
     </target>
 
     <target name="test" depends="test.junit.launcher" />
-
-    <target name="run" depends="compile">
-        <java classname="edu.umb.cs680.hw00.Calculator"
-            classpathref="test.classpath"
-            fork="true" />
-        <java classname="edu.umb.cs680.hw01.PrimeGenerator"
-            classpathref="test.classpath"
-            fork="true" />
-    </target>
 </project>

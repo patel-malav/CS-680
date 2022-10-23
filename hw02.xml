@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="junit5-jupiter-starter-ant" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="hw02" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <property name="package" value="hw02" />
 
     <fail message="Ant 1.10.4+ is required!">
         <condition>
@@ -35,8 +37,12 @@
     </target>
 
     <target name="compile" depends="resolve">
-        <javac destdir="bin" srcdir="src" includeantruntime="false" />
-        <javac destdir="test/bin" classpathref="test.classpath" srcdir="test" includeantruntime="false" />
+        <javac destdir="bin" srcdir="src" includeantruntime="false">
+            <include name="edu/umb/cs680/${package}/**/*.java" />
+        </javac>
+        <javac destdir="test/bin" classpathref="test.classpath" srcdir="test" includeantruntime="false">
+            <include name="edu/umb/cs680/${package}/**/*Test.java" />
+        </javac>
     </target>
 
     <!-- https://junit.org/junit5/docs/snapshot/user-guide/#running-tests-build-ant -->
@@ -53,22 +59,11 @@
         </junitlauncher>
     </target>
 
-    <!-- https://junit.org/junit5/docs/current/user-guide/#running-tests-console-launcher -->
-    <target name="test.console.launcher" depends="compile">
-        <java classpathref="test.classpath" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
-            <arg value="--scan-classpath" />
-            <arg line="--reports-dir test-report" />
-        </java>
-        <junitreport todir="test-report">
-            <fileset dir="test-report">
-                <include name="TEST-*.xml" />
-            </fileset>
-            <report format="frames" todir="test-report/html" />
-        </junitreport>
-    </target>
-
     <target name="test" depends="test.junit.launcher" />
 
     <target name="run" depends="compile">
+        <java classname="edu.umb.cs680.hw02.PrimeGenerator"
+            classpathref="test.classpath"
+            fork="true" />
     </target>
 </project>
