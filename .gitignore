@@ -1,6 +1,6 @@
 # Ant
 bin
-test-report
+test/report
 lib
 
 # Ignore Gradle GUI config
