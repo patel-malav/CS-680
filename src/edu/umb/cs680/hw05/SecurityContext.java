@@ -6,10 +6,12 @@ public class SecurityContext {
     private boolean active = true;
 
     SecurityContext(User user) {
-        this.state = new LoggedOut(this);
+        LoggedIn.getInstance(this);
+        this.state = LoggedOut.getInstance(this);
     }
 
     public State getState() {
+        System.out.println(this.state);
         return this.state;
     }
 
