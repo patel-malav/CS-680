@@ -5,7 +5,7 @@ public class SecurityContext {
     private State state;
     private boolean active = true;
 
-    SecurityContext(User user) {
+    public SecurityContext(User user) {
         LoggedIn.getInstance(this);
         this.state = LoggedOut.getInstance(this);
     }
