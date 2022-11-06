@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="hw02" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="hw01_02" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <property name="package" value="hw02" />
 

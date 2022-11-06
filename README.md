@@ -15,7 +15,6 @@ HW-01 -> Create Test class for PrimeGenerator.java, use ant for compiling and ru
 HW-02 -> Update HW-01 to use ivy for fetching dependencies
 
 ```shell
-    cd hw01-02
     ant -f hw02.xml
 ```
 
@@ -23,7 +22,6 @@ HW-02 -> Update HW-01 to use ivy for fetching dependencies
 Write and test a singleton class
 
 ```shell
-    cd hw03
     ant -f hw03.xml
 ```
 ## HW-04
@@ -33,6 +31,19 @@ Write and test a singleton class
     - Define a test method verifyCarEqualityWithMakeModelYear()
 
 ```shell
-    cd hw04
     ant -f hw04.xml
+```
+
+## HW-05
+- State Design Pattern, Create Security Context to implement State Transition Diagram
+
+```shell
+    ant -f hw05.xml
+```
+
+## HW-06
+- Template Desgin Pattern
+
+```shell
+    ant -f hw06.xml
 ```
